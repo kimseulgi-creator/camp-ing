@@ -11,7 +11,7 @@ function Home() {
   return (
     <StBgSection backgroundimg={Bg}>
       <StMainWrap>
-        <div>
+        <div className="mainWord">
           <h1>CAMP ING</h1>
           <p>
             베테랑 캠핑러부터 초보 캠핑러까지 모두 모여 소통하자!
@@ -68,7 +68,7 @@ const StMainWrap = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  & div {
+  & .mainWord {
     display: inline-block;
     & h1 {
       background-image: url(${loginLogo});
@@ -89,6 +89,9 @@ const StMainWrap = styled.div`
   }
   & form {
     margin-left: 250px;
+    & div {
+      margin-top: 20px;
+    }
   }
 `;
 
@@ -107,7 +110,7 @@ export const StForm = styled.form`
 `;
 
 export const StButton = styled.div`
-  margin-top: 20px;
+  text-align: center;
   & button {
     background-color: #002925;
     width: 140px;

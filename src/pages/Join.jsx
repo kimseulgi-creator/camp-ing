@@ -87,7 +87,7 @@ function Join() {
 }
 
 export default Join;
-const StformBg = styled.div`
+export const StformBg = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -112,5 +112,8 @@ const StformBg = styled.div`
   }
   & .btnWrap {
     margin-top: 30px;
+  }
+  &.writeForm {
+    padding: 60px 0;
   }
 `;

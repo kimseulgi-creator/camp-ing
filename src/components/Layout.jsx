@@ -48,11 +48,8 @@ const StHeader = styled.header`
     background-size: contain;
     display: inline-block;
   }
-  & div {
-    margin: 0;
-    & button {
-      width: 100px;
-    }
+  & button {
+    width: 100px;
   }
 `;
 
