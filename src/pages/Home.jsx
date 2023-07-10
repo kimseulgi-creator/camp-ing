@@ -4,7 +4,7 @@ import Bg from '../images/login_bg.jpg';
 import loginLogo from '../images/login_logo.png';
 import { useNavigate } from 'react-router';
 import { useCookies } from 'react-cookie';
-import '../style/style.css';
+
 function Home() {
   const [cookies, setCookie] = useCookies();
   const navigate = useNavigate();
@@ -55,11 +55,10 @@ export default Home;
 
 export const StBgSection = styled.section`
   background-image: url(${(props) => props.backgroundimg});
-  min-height: 100vw;
+  min-height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
 `;
 const StMainWrap = styled.div`
   display: flex;
