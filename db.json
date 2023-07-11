@@ -5,7 +5,7 @@
       "nickName": "",
       "password": "1234",
       "userId": "test1",
-      "isLogin": true
+      "isLogin": false
     },
     {
       "id": "EZjFI5taB",
@@ -13,6 +13,27 @@
       "password": "4567",
       "userId": "test2",
       "isLogin": false
+    },
+    {
+      "userId": "awera",
+      "nickName": "",
+      "password": "gksrnr783!",
+      "isLogin": false,
+      "id": "-plD0hG92"
+    },
+    {
+      "userId": "qwerty",
+      "nickName": "",
+      "password": "gksrnr783!",
+      "isLogin": true,
+      "id": "2CeMZn5ZF"
+    },
+    {
+      "userId": "asdfg",
+      "nickName": "",
+      "password": "gksrnr783!",
+      "isLogin": false,
+      "id": "ufYplOaI1"
     }
   ]
 }
