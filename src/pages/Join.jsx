@@ -5,6 +5,7 @@ import { styled } from 'styled-components';
 import { useMutation, useQueryClient } from 'react-query';
 import { addUser } from '../api/users';
 import { useNavigate } from 'react-router';
+import shortid from 'shortid';
 
 function Join() {
   const queryClient = useQueryClient();
@@ -16,12 +17,12 @@ function Join() {
     },
   });
   const [inputs, setInputs] = useState({
-    email: '',
+    id: '',
     nickName: '',
     password: '',
   });
 
-  const { email, nickName, password } = inputs;
+  const { userId, nickName, password } = inputs;
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -29,7 +30,6 @@ function Join() {
       ...inputs,
       [name]: value,
     });
-    console.log(inputs);
   };
   return (
     <StBgSection backgroundimg={Bg}>
@@ -41,10 +41,15 @@ function Join() {
           }}
         >
           <label>
-            이메일
-            <input name="email" type="text" value={email} onChange={onChange} />
+            아이디
+            <input
+              name="userId"
+              type="text"
+              value={userId}
+              onChange={onChange}
+            />
           </label>
-          <label>
+          {/* <label>
             닉네임
             <input
               name="nickName"
@@ -52,7 +57,7 @@ function Join() {
               value={nickName}
               onChange={onChange}
             />
-          </label>
+          </label> */}
           <label>
             비밀번호
             <input
@@ -70,7 +75,7 @@ function Join() {
             <button
               type="submit"
               onClick={function () {
-                mutation.mutate({ ...inputs, isLogin: false });
+                mutation.mutate({ ...inputs, isLogin: false, id: shortid() });
                 navigate('/');
               }}
             >
@@ -101,6 +106,7 @@ export const StformBg = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   & h2 {
     font-size: 28px;
     font-weight: bold;

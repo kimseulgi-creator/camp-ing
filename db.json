@@ -1,11 +1,18 @@
 {
   "users": [
     {
-      "email": "awefawsf",
-      "nickName": "awefawef",
-      "password": "awefawef",
-      "isLogin": false,
-      "id": 1
+      "id": "BjpfUP0Rr",
+      "nickName": "",
+      "password": "1234",
+      "userId": "test1",
+      "isLogin": true
+    },
+    {
+      "id": "EZjFI5taB",
+      "nickName": "",
+      "password": "4567",
+      "userId": "test2",
+      "isLogin": false
     }
   ]
 }

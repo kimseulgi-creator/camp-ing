@@ -1,13 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import Bg from '../images/login_bg.jpg';
 import loginLogo from '../images/login_logo.png';
 import { useNavigate } from 'react-router';
 import { useCookies } from 'react-cookie';
+import { editUser, getUsers } from '../api/users';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 function Home() {
   const [cookies, setCookie] = useCookies();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const mutation = useMutation(editUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('users');
+      console.log('성공하였습니다!');
+    },
+  });
+
+  const [inputs, setInputs] = useState({
+    userId: '',
+    password: '',
+  });
+
+  const { userId, password } = inputs;
+
+  const onChange = (e) => {
+    const { value, name } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
+  const { isLoading, isError, data } = useQuery('users', getUsers);
+
+  const loginButtonHandler = () => {
+    const filterLoginUser = data.filter((user) => {
+      return user.userId === userId && user.password === password;
+    });
+    const [loginUser] = filterLoginUser;
+    console.log(loginUser);
+
+    const { id, isLogin } = loginUser;
+
+    mutation.mutate({ id, isLogin });
+  };
+
   return (
     <StBgSection backgroundimg={Bg}>
       <StMainWrap>
@@ -24,8 +59,20 @@ function Home() {
             e.preventDefault();
           }}
         >
-          <input type="text" placeholder="아이디" />
-          <input type="password" placeholder="비밀번호" />
+          <input
+            name="userId"
+            type="text"
+            placeholder="아이디"
+            value={userId}
+            onChange={onChange}
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="비밀번호"
+            value={password}
+            onChange={onChange}
+          />
           <StButton>
             <button
               type="submit"
@@ -39,7 +86,8 @@ function Home() {
               type="submit"
               onClick={function () {
                 // setCookie('id', inputs.email)
-                navigate('/list');
+                loginButtonHandler();
+                // navigate('/list');
               }}
             >
               LOGIN
@@ -72,23 +120,27 @@ const StMainWrap = styled.div`
     display: inline-block;
     & h1 {
       background-image: url(${loginLogo});
-      width: 800px;
+      /* width: 800px; */
+      width: 41vw;
       background-repeat: no-repeat;
       background-position: center;
       text-indent: -9999px;
-      line-height: 450px;
+      /* line-height: 450px; */
+      line-height: 23vw;
       background-size: contain;
     }
     & p {
       font-size: 26px;
       color: white;
       font-weight: bold;
-      margin-top: 60px;
+      /* margin-top: 60px; */
+      margin-top: 3vw;
       line-height: 40px;
     }
   }
   & form {
-    margin-left: 250px;
+    /* margin-left: 250px; */
+    margin-left: 13vw;
     & div {
       margin-top: 20px;
     }
@@ -116,10 +168,11 @@ export const StButton = styled.div`
     width: 140px;
     height: 30px;
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     box-shadow: 3px 3px 10px 0 rgb(0 0 0 / 30%);
     transition: all 1s;
+    border-radius: 30px;
   }
   & button:nth-child(2) {
     margin-left: 20px;
