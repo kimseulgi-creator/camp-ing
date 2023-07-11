@@ -13,9 +13,8 @@ const addUser = async (newUser) => {
 const editUser = async (loginUser) => {
   console.log(loginUser);
   const { id, isLogin } = loginUser;
-  console.log(!isLogin);
   await axios.patch(`${process.env.REACT_APP_SERVER_URL}/users/${id}`, {
-    isLogin: !isLogin,
+    isLogin,
   });
 };
 

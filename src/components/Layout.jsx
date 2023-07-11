@@ -24,11 +24,17 @@ function Layout(props) {
     return user.isLogin === true;
   });
   const [loginUser] = filterLoginUser;
+
+  if (!loginUser) {
+    // 로그인한 사용자가 없는 경우에 대한 처리
+    return <p>로그인한 사용자가 없습니다.</p>;
+  }
+
   console.log(loginUser);
 
   const logoutButtonHandler = () => {
     const { id, isLogin } = loginUser;
-    mutation.mutate({ id, isLogin });
+    mutation.mutate({ id, isLogin: false });
   };
 
   return (
