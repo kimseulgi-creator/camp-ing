@@ -35,12 +35,25 @@ function Home() {
     const filterLoginUser = data.filter((user) => {
       return user.userId === userId && user.password === password;
     });
-    const [loginUser] = filterLoginUser;
-    console.log(loginUser);
+    // console.log(filterLoginUser == false);
+    if (filterLoginUser != false) {
+      const [loginUser] = filterLoginUser;
+      console.log(loginUser);
+      const { id, userId, isLogin } = loginUser;
+      mutation.mutate({ id, isLogin: true });
+      alert(`welcome ${userId}💚`);
+      navigate('/list');
+    } else {
+      alert('아이디와 비밀번호를 확인해주세요.');
+    }
 
-    const { id, isLogin } = loginUser;
-
-    mutation.mutate({ id, isLogin });
+    // if (id) {
+    //   alert('로그인 성공');
+    //   // mutation.mutate({ id, isLogin });
+    //   // navigate('/list');
+    // } else {
+    //   alert('로그인 실패');
+    // }
   };
 
   return (
