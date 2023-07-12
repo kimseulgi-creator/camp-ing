@@ -5,8 +5,12 @@ import { StButton } from '../pages/Home';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { editUser, getUsers } from '../api/users';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../redux/modules/LoginSlice';
 
 function Layout(props) {
+  const filterLoginUser = useSelector((state) => state.login);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const mutation = useMutation(editUser, {
@@ -20,27 +24,22 @@ function Layout(props) {
   if (isLoading) {
     return <p>로딩중입니다...</p>;
   }
-  const filterLoginUser = data.filter((user) => {
-    return user.isLogin === true;
-  });
-  const [loginUser] = filterLoginUser;
-
-  if (!loginUser) {
+  dispatch(loginUser(data));
+  console.log(filterLoginUser);
+  if (!filterLoginUser) {
     // 로그인한 사용자가 없는 경우에 대한 처리
     return <p>로그인한 사용자가 없습니다.</p>;
   }
 
-  console.log(loginUser);
-
   const logoutButtonHandler = () => {
-    const { id, isLogin } = loginUser;
+    const { id, isLogin } = filterLoginUser;
     mutation.mutate({ id, isLogin: false });
   };
 
   return (
     <StBackground>
       <StHeader>
-        <a className="loginUserId">{loginUser.userId}</a>
+        <a className="loginUserId">{filterLoginUser.userId}</a>
         <h1>
           <a href="#">camp ing</a>
         </h1>

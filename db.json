@@ -25,7 +25,7 @@
       "userId": "qwerty",
       "nickName": "",
       "password": "gksrnr783!",
-      "isLogin": true,
+      "isLogin": false,
       "id": "2CeMZn5ZF"
     },
     {
@@ -34,6 +34,25 @@
       "password": "gksrnr783!",
       "isLogin": false,
       "id": "ufYplOaI1"
+    },
+    {
+      "userId": "test1",
+      "nickName": "",
+      "password": "gksrnr783!",
+      "isLogin": false,
+      "id": "_r7Z_x7rT"
+    }
+  ],
+  "posts": [
+    {
+      "firstday": "2023-07-15",
+      "lastday": "2023-07-28",
+      "place": "청계산",
+      "review": "재밌었다.",
+      "userId": "qwerty",
+      "image": "https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/qwerty%2F1.jpeg?alt=media&token=6b2a8415-e904-4427-8378-5f5965dd6f20",
+      "postDate": 1689160422817,
+      "id": 1
     }
   ]
 }
