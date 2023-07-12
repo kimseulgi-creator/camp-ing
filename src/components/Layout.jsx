@@ -62,6 +62,7 @@ function Layout(props) {
 export default React.memo(Layout);
 const StBackground = styled.div`
   background-color: #2b8279;
+  min-height: 100vh;
 `;
 const StHeader = styled.header`
   background-color: white;

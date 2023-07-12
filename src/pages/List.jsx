@@ -1,42 +1,38 @@
 import React from 'react';
 import Layout from '../components/Layout';
-import dummy1 from '../dummy/reveiw01.jpg';
-import dummy2 from '../dummy/reveiw02.jpg';
-import dummy3 from '../dummy/reveiw03.jpg';
-import dummy4 from '../dummy/reveiw04.jpg';
 import { styled } from 'styled-components';
 import writeBtn from '../images/write_btn.svg';
 import { useNavigate } from 'react-router';
+import { useQuery } from 'react-query';
+import { getPosts } from '../api/posts';
 
 function List() {
   const navigate = useNavigate();
+
+  const { isLoading, isError, data } = useQuery('posts', getPosts);
+  if (isLoading) {
+    return <p>로딩중입니다...</p>;
+  }
+  const currentDate = new Date(data[0].postDate);
+  console.log(currentDate);
+  console.log(data);
+  const dateSplit = String(currentDate).split(' ');
+  const date = `${dateSplit[3]} ${dateSplit[1]} ${dateSplit[2]} ${dateSplit[4]}`;
+  console.log(date);
   return (
     <Layout>
       <StContainer>
-        <StPostingCard>
-          <img src={dummy1} />
-          <StPostingWord>
-            <p>paperwhite_wits</p>
-          </StPostingWord>
-        </StPostingCard>
-        <StPostingCard>
-          <img src={dummy2} />
-          <StPostingWord>
-            <p>near_deer.wits</p>
-          </StPostingWord>
-        </StPostingCard>
-        <StPostingCard>
-          <img src={dummy3} />
-          <StPostingWord>
-            <p>weeny_mt.wits</p>
-          </StPostingWord>
-        </StPostingCard>
-        {/* <div>
-          <img src={dummy4} />
-          <div>
-            <p>lovable._.wits</p>
-          </div>
-        </div> */}
+        {data.map((post) => {
+          return (
+            <StPostingCard>
+              <img src={post.image} />
+              <StPostingWord>
+                <p>{`#${post.place.replaceAll(' ', ' #')}`}</p>
+                <p>{date}</p>
+              </StPostingWord>
+            </StPostingCard>
+          );
+        })}
       </StContainer>
       <StWriteBtn onClick={() => navigate('/write')}>글쓰기</StWriteBtn>
     </Layout>
@@ -52,10 +48,9 @@ const StContainer = styled.div`
   justify-content: center;
   grid-gap: 90px 120px;
   padding: 120px 0;
+
   & img {
     width: 590px;
-    border-radius: 30px;
-    box-shadow: 5px 5px 10px 0px #00000030;
   }
 `;
 
@@ -63,6 +58,12 @@ const StPostingCard = styled.div`
   position: relative;
   cursor: pointer;
   transition: all ease 0.7s;
+  height: 390px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  border-radius: 30px;
+  box-shadow: 5px 5px 10px 0px #00000030;
   &:hover {
     scale: 1.03;
   }
@@ -73,14 +74,19 @@ const StPostingWord = styled.div`
   bottom: 0;
   height: 70px;
   background-color: white;
-  width: 100%;
+  width: 530px;
   border-radius: 0 0px 30px 30px;
   display: flex;
   align-items: center;
+  padding: 0 30px;
+  justify-content: space-between;
   & p {
-    margin-left: 20px;
     font-size: 18px;
     font-weight: bold;
+  }
+  & p:nth-child(2) {
+    font-weight: normal;
+    font-size: 14px;
   }
 `;
 
