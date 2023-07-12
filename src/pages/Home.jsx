@@ -3,14 +3,18 @@ import { styled } from 'styled-components';
 import Bg from '../images/login_bg.jpg';
 import loginLogo from '../images/login_logo.png';
 import { useNavigate } from 'react-router';
-import { useCookies } from 'react-cookie';
+// import { useCookies } from 'react-cookie';
 import { editUser, getUsers } from '../api/users';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../redux/modules/LoginSlice';
 
 function Home() {
-  const [cookies, setCookie] = useCookies();
+  // const loginUserData = useSelector((state) => state);
+  // const [cookies, setCookie] = useCookies();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
   const mutation = useMutation(editUser, {
     onSuccess: () => {
       queryClient.invalidateQueries('users');
@@ -30,11 +34,16 @@ function Home() {
     setInputs({ ...inputs, [name]: value });
   };
   const { isLoading, isError, data } = useQuery('users', getUsers);
+  if (isLoading) {
+    return <p>로딩중입니다...</p>;
+  }
 
   const loginButtonHandler = () => {
     const filterLoginUser = data.filter((user) => {
       return user.userId === userId && user.password === password;
     });
+    dispatch(loginUser(filterLoginUser));
+
     // console.log(filterLoginUser == false);
     if (filterLoginUser != false) {
       const [loginUser] = filterLoginUser;

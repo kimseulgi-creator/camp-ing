@@ -2,12 +2,20 @@ import React, { useState } from 'react';
 import { StBgSection, StButton, StForm } from './Home';
 import Bg from '../images/form_bg.jpg';
 import { StformBg } from './Join';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addPost } from '../api/posts';
 import { useNavigate } from 'react-router';
 import { styled } from 'styled-components';
+import { getDownloadURL, ref, uploadBytes } from '@firebase/storage';
+import { storage } from '../firebase';
+import { getUsers } from '../api/users';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../redux/modules/LoginSlice';
+import shortid from 'shortid';
 
 function Write() {
+  const filterLoginUser = useSelector((state) => state.login);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const mutation = useMutation(addPost, {
@@ -16,13 +24,15 @@ function Write() {
       console.log('성공하였습니다!');
     },
   });
+  const [image, setImage] = useState('');
   const [inputs, setInputs] = useState({
-    image: '',
     firstday: '',
     lastday: '',
+    place: '',
+    review: '',
   });
 
-  const { image, firstday, lastday } = inputs;
+  const { firstday, lastday, place, review } = inputs;
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -30,8 +40,37 @@ function Write() {
       ...inputs,
       [name]: value,
     });
-    console.log(inputs);
   };
+  const [selectedFile, setSelectedFile] = useState(null);
+  const { isLoading, isError, data } = useQuery('users', getUsers);
+  if (isLoading) {
+    return <p>로딩중입니다...</p>;
+  }
+  dispatch(loginUser(data));
+  console.log(filterLoginUser);
+  const { userId, password, id } = filterLoginUser;
+
+  const handleFileSelect = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+  const handleUpload = async () => {
+    // ref 함수를 이용해서 Storage 내부 저장할 위치를 지정하고, uploadBytes 함수를 이용해서 파일을 저장합니다.
+    const imageRef = ref(storage, `${userId}/${selectedFile.name}`);
+    await uploadBytes(imageRef, selectedFile);
+    // mutation.mutate({ ...inputs, isLogin: false });
+    // navigate('/');
+    const imgDownloadURL = await getDownloadURL(imageRef);
+    setImage(imgDownloadURL);
+
+    mutation.mutate({
+      ...inputs,
+      postId: shortid,
+      userId,
+      image,
+      postDate: Date.now(),
+    });
+  };
+  console.log(inputs);
   return (
     <StBgSection backgroundimg={Bg}>
       <StformBg className="writeForm">
@@ -43,7 +82,7 @@ function Write() {
         >
           <StLabel>
             이미지
-            <input name="image" type="file" value={image} onChange={onChange} />
+            <input type="file" onChange={handleFileSelect} />
           </StLabel>
           <StLabel>
             캠핑 날짜
@@ -63,20 +102,19 @@ function Write() {
           </StLabel>
           <StLabel>
             캠핑 장소
-            <input type="text" />
+            <input name="place" type="text" value={place} onChange={onChange} />
           </StLabel>
           <StLabel>
-            <textarea placeholder="캠핑을 다녀오면서 인상깊었던 내용을 적어보세요🍃"></textarea>
+            <textarea
+              name="review"
+              placeholder="캠핑을 다녀오면서 인상깊었던 내용을 적어보세요🍃"
+              value={review}
+              onChange={onChange}
+            ></textarea>
           </StLabel>
           <StButton>
-            <button
-              type="submit"
-              onClick={function () {
-                mutation.mutate({ ...inputs, isLogin: false });
-                navigate('/');
-              }}
-            >
-              JOIN
+            <button type="submit" onClick={() => handleUpload()}>
+              POST
             </button>
             <button type="submit" onClick={() => navigate(-1)}>
               CANCEL

@@ -5,8 +5,8 @@ const getPosts = async () => {
   return response.data;
 };
 
-const addPost = async (newUser) => {
-  await axios.post(`${process.env.REACT_APP_SERVER_URL}/users`, newUser);
+const addPost = async (newPost) => {
+  await axios.post(`${process.env.REACT_APP_SERVER_URL}/posts`, newPost);
 };
 
 export { getPosts, addPost };
