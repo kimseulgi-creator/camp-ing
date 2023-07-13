@@ -1,11 +1,12 @@
 import React from 'react';
 import Layout from '../components/Layout';
-import { StformBg } from './Join';
-import { StButton } from './Home';
-import { styled } from 'styled-components';
+import { StFormBg } from '../style/JoinStyle';
 import { useNavigate, useParams } from 'react-router';
 import { useQuery } from 'react-query';
 import { getPosts } from '../api/posts';
+import Button from '../components/Button';
+import { StDetailContents, StDetailImg, StInfo } from '../style/DetailStyle';
+import { StButtonWrap } from '../style/HomeStyle';
 
 function Detail() {
   const navigate = useNavigate();
@@ -29,37 +30,39 @@ function Detail() {
 
   return (
     <Layout>
-      <StformBg as="div">
+      <StFormBg
+        marginTop={'25px'}
+        width={'1300px'}
+        height={'740px'}
+        flexDirection={'row'}
+      >
         <StDetailImg>
           <img src="https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/qwerty%2F000022940015.jpg?alt=media&token=c627facb-ec2b-4142-b9bd-1b98df036f4a" />
         </StDetailImg>
-        <div>
+        <StDetailContents>
           <p>{userId}</p>
-          <dl>
-            <dt>
-              {`${firstday} ~ ${lastday}`}
-              <span>{`${period}일간 캠핑🍃`}</span>
-            </dt>
-            <dt>PLACE</dt>
-            <dd>{place}</dd>
-            <dt>REVIEW</dt>
-
-            <dd>{review}</dd>
-          </dl>
-          <StButton>
-            <button>Delete</button>
-            <button>Edit</button>
-          </StButton>
-        </div>
-      </StformBg>
+          <StInfo>
+            <p>{`${period}일간 캠핑🍃`}</p>
+            <dl>
+              <dt>{`${firstday} ~ ${lastday}`}</dt>
+            </dl>
+            <dl>
+              <dt>PLACE</dt>
+              <dd>{place}</dd>
+            </dl>
+            <dl>
+              <dt>REVIEW</dt>
+              <dd>{review}</dd>
+            </dl>
+          </StInfo>
+          <StButtonWrap>
+            <Button>Delete</Button>
+            <Button>Edit</Button>
+          </StButtonWrap>
+        </StDetailContents>
+      </StFormBg>
     </Layout>
   );
 }
 
 export default Detail;
-
-const StDetailImg = styled.div`
-  width: 350px;
-  height: 480px;
-  overflow: hidden;
-`;

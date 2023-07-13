@@ -1,17 +1,18 @@
 import React, { useRef, useState } from 'react';
-import { StBgSection, StButton, StForm } from './Home';
+import { StBgSection, StButtonWrap, StForm } from '../style/HomeStyle';
 import Bg from '../images/form_bg.jpg';
-import { StformBg } from './Join';
+import { StFormBg } from '../style/JoinStyle';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addPost } from '../api/posts';
 import { useNavigate } from 'react-router';
-import { styled } from 'styled-components';
 import { getDownloadURL, ref, uploadBytes } from '@firebase/storage';
 import { storage } from '../firebase';
 import { getUsers } from '../api/users';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../redux/modules/LoginSlice';
 import shortid from 'shortid';
+import Button from '../components/Button';
+import { StLabel } from '../style/WriteStyle';
 
 function Write() {
   const filterLoginUser = useSelector((state) => state.login);
@@ -99,7 +100,7 @@ function Write() {
   console.log(inputs);
   return (
     <StBgSection backgroundimg={Bg}>
-      <StformBg className="writeForm">
+      <StFormBg padding={'60px 0'}>
         <h2>이번 캠핑은 어땠는지 알려주세요</h2>
         <StForm
           onSubmit={function (e) {
@@ -145,47 +146,18 @@ function Write() {
               ref={reviewRef}
             ></textarea>
           </StLabel>
-          <StButton>
-            <button type="submit" onClick={() => handleUpload()}>
+          <StButtonWrap>
+            <Button type="submit" onClick={() => handleUpload()}>
               POST
-            </button>
-            <button type="submit" onClick={() => navigate(-1)}>
+            </Button>
+            <Button type="submit" onClick={() => navigate(-1)}>
               CANCEL
-            </button>
-          </StButton>
+            </Button>
+          </StButtonWrap>
         </StForm>
-      </StformBg>
+      </StFormBg>
     </StBgSection>
   );
 }
 
 export default Write;
-const StLabel = styled.label`
-  flex-direction: row !important;
-  align-items: center;
-  justify-content: space-between;
-  &:nth-child(2) input {
-    width: 130px;
-    &:nth-child(1) {
-      margin-right: 15px;
-    }
-    &:nth-child(2) {
-      margin-left: 15px;
-    }
-  }
-  & input {
-    width: 305px;
-    margin-left: 30px;
-    line-height: 30px;
-  }
-  & textarea {
-    width: 100%;
-    margin-top: 30px;
-    height: 150px;
-    padding: 10px;
-    border: none;
-    resize: none;
-    box-shadow: 3px 3px 10px 0 #00000030 inset;
-    margin-bottom: 60px;
-  }
-`;

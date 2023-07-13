@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StBgSection, StButton, StForm } from './Home';
 import Bg from '../images/form_bg.jpg';
-import { styled } from 'styled-components';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { addUser } from '../api/users';
 import { useNavigate } from 'react-router';
 import shortid from 'shortid';
+import Button from '../components/Button';
+import { StBgSection, StButtonWrap, StForm } from '../style/HomeStyle';
+import { StFormBg } from '../style/JoinStyle';
 
 function Join() {
   const queryClient = useQueryClient();
@@ -106,7 +107,7 @@ function Join() {
 
   return (
     <StBgSection backgroundimg={Bg}>
-      <StformBg>
+      <StFormBg>
         <h2>저희와 함께 캠핑을 즐겨보아요!</h2>
         <StForm
           onSubmit={function (e) {
@@ -160,55 +161,14 @@ function Join() {
             />
           </label>
           <p ref={checkPwValidationMsgRef}>비밀번호가 일치하지 않습니다.</p>
-          <StButton className="btnWrap">
-            <button type="submit" onClick={() => joinButtonHandler()}>
-              JOIN
-            </button>
-            <button type="submit" onClick={() => navigate(-1)}>
-              CANCEL
-            </button>
-          </StButton>
+          <StButtonWrap marginTop="40px">
+            <Button onClick={() => joinButtonHandler()}>JOIN</Button>
+            <Button onClick={() => navigate(-1)}>CANCEL</Button>
+          </StButtonWrap>
         </StForm>
-      </StformBg>
+      </StFormBg>
     </StBgSection>
   );
 }
 
 export default Join;
-export const StformBg = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 800px;
-  height: 600px;
-  background-color: white;
-  border-radius: 30px;
-  box-shadow: 5px 5px 10px 0 #00000030;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  & h2 {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 60px;
-  }
-  & label {
-    display: flex;
-    flex-direction: column;
-  }
-  & p {
-    color: red;
-    font-size: 12px;
-    margin-bottom: 20px;
-    line-height: 18px;
-  }
-  & .btnWrap {
-    margin-top: 40px;
-  }
-  &.writeForm {
-    padding: 60px 0;
-  }
-`;
