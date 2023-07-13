@@ -51,7 +51,7 @@ function Write() {
   }
   dispatch(loginUser(data));
   console.log(filterLoginUser);
-  const { userId, password, id } = filterLoginUser;
+  const { user, password, id } = filterLoginUser;
 
   const period =
     Number(lastday.replaceAll('-', '')) - Number(firstday.replaceAll('-', ''));
@@ -80,7 +80,7 @@ function Write() {
       return false;
     } else {
       // ref 함수를 이용해서 Storage 내부 저장할 위치를 지정하고, uploadBytes 함수를 이용해서 파일을 저장합니다.
-      const imageRef = ref(storage, `${userId}/${selectedFile.name}`);
+      const imageRef = ref(storage, `${user}/${selectedFile.name}`);
       await uploadBytes(imageRef, selectedFile);
 
       const imgDownloadURL = await getDownloadURL(imageRef);
@@ -89,7 +89,7 @@ function Write() {
       mutation.mutate({
         ...inputs,
         id: shortid(),
-        userId,
+        user,
         // image,
         image: imgDownloadURL,
         postDate: Date.now(),

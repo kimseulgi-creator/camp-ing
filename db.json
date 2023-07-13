@@ -1,98 +1,22 @@
 {
   "users": [
     {
-      "id": "BjpfUP0Rr",
-      "nickName": "",
-      "password": "1234",
-      "userId": "test1",
-      "isLogin": false
-    },
-    {
-      "id": "EZjFI5taB",
-      "nickName": "",
-      "password": "4567",
-      "userId": "test2",
-      "isLogin": false
-    },
-    {
-      "userId": "awera",
+      "user": "asdfg",
       "nickName": "",
       "password": "gksrnr783!",
       "isLogin": false,
-      "id": "-plD0hG92"
-    },
-    {
-      "userId": "qwerty",
-      "nickName": "",
-      "password": "gksrnr783!",
-      "isLogin": false,
-      "id": "2CeMZn5ZF"
-    },
-    {
-      "userId": "asdfg",
-      "nickName": "",
-      "password": "gksrnr783!",
-      "isLogin": false,
-      "id": "ufYplOaI1"
-    },
-    {
-      "userId": "poiuy",
-      "nickName": "",
-      "password": "poiuyt1!",
-      "isLogin": false,
-      "id": "pvPay3TRK"
+      "id": "yCbVQNCi5"
     }
   ],
   "posts": [
     {
-      "firstday": "2023-07-14",
+      "firstday": "2023-07-13",
       "lastday": "2023-07-14",
-      "place": "용인",
-      "review": "sehser",
-      "id": "r-VV0R0a-",
-      "userId": "qwerty",
-      "image": "https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/qwerty%2F000022940015.jpg?alt=media&token=c627facb-ec2b-4142-b9bd-1b98df036f4a",
-      "postDate": 1689165692228
-    },
-    {
-      "firstday": "2023-07-21",
-      "lastday": "2023-07-27",
-      "place": "용인",
-      "review": "asrehsrehserh",
-      "id": "FZtZHXho0",
-      "userId": "qwerty",
-      "image": "https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/qwerty%2F000022940035.jpg?alt=media&token=9aae6f3d-ca2c-437f-864c-bb41215f29b2",
-      "postDate": 1689167702300
-    },
-    {
-      "firstday": "2023-07-12",
-      "lastday": "2023-07-12",
-      "place": "청계산 골든밸리 캠핑장",
-      "review": "짱 재밌었다.",
-      "id": "UwcBd1uSE",
-      "userId": "qwerty",
-      "image": "https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/qwerty%2F1.jpeg?alt=media&token=06a84fc3-26bd-4798-af6a-2d370602a38a",
-      "postDate": 1689173398842
-    },
-    {
-      "firstday": "2023-07-13",
-      "lastday": "2023-07-18",
-      "place": "안홍민 캠핑 싫어함",
-      "review": "엄청 싫어함",
-      "id": "p4O8D4XNo",
-      "userId": "qwerty",
-      "image": "https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/qwerty%2F2.jpeg?alt=media&token=8c14d0db-878a-4c91-a9be-b3fdbf79f97c",
-      "postDate": 1689173450809
-    },
-    {
-      "firstday": "2023-07-13",
-      "lastday": "2023-07-13",
-      "place": "야호",
-      "review": "신난다 재미난다 언제나 그랬듯이 글을 한 번 길게 적어봅시다요\n호호호 라라라라랄라라 이렇게 길게 쓰면 어떻게 될까요 굉장히 궁금하지만 일단 이 text-area line-height크기를 좀 줘야할거 같다는 생각이 무진장 들고요 output에서도 왠지 줘야할거 같지만 일단 궁금증부터 풀어보고자 이렇게 글을 적어봅니다.\n휴 언제나 글을 이렇게 길게 적는건 힘든 일인거 같아요\n지금 일어나서 지금까지 아무것도 못먹어서 너무 배고프고요\n일단 스타일드 컴포넌트 다 분리해줬으니 이제 밥을 먹을 수 있을거 같습니다. 이만큼이나 썼는데 아직도 적는 칸이 많이 남았고요\n이제 복붙을 해야할거 같습니다. 신난다 재미난다 언제나 그랬듯이 글을 한 번 길게 적어봅시다요 호호호 라라라라랄라라 이렇게 길게 쓰면 어떻게 될까요 굉장히 ",
-      "id": "AQwDtGopP",
-      "userId": "poiuy",
-      "image": "https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/poiuy%2F3.jpeg?alt=media&token=1088a91e-e431-4ec6-9a8f-602509ccfd91",
-      "postDate": 1689239697141
+      "place": "awef",
+      "review": "awefawefawef",
+      "id": "COY3fwImp",
+      "image": "https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/undefined%2F1.jpeg?alt=media&token=3151093b-2421-4ede-bd38-27ead8d6def6",
+      "postDate": 1689246150558
     }
   ]
 }
