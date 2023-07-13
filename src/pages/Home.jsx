@@ -99,20 +99,20 @@ function Home() {
             <button
               type="submit"
               onClick={function () {
-                navigate('/join');
-              }}
-            >
-              JOIN
-            </button>
-            <button
-              type="submit"
-              onClick={function () {
                 // setCookie('id', inputs.email)
                 loginButtonHandler();
                 // navigate('/list');
               }}
             >
               LOGIN
+            </button>
+            <button
+              type="submit"
+              onClick={function () {
+                navigate('/join');
+              }}
+            >
+              JOIN
             </button>
           </StButton>
         </StForm>
