@@ -1,12 +1,13 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import logo from '../images/header_logo.svg';
-import { StButton } from '../pages/Home';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { editUser, getUsers } from '../api/users';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../redux/modules/LoginSlice';
+import Button, { StButton } from './Button';
+import { StButtonWrap } from '../style/HomeStyle';
 
 function Layout(props) {
   const filterLoginUser = useSelector((state) => state.login);
@@ -43,16 +44,17 @@ function Layout(props) {
         <h1>
           <a href="#">camp ing</a>
         </h1>
-        <StButton>
-          <button
+        <StButtonWrap>
+          <StButton
+            width="100px"
             onClick={function () {
               logoutButtonHandler();
               navigate('/');
             }}
           >
             Logout
-          </button>
-        </StButton>
+          </StButton>
+        </StButtonWrap>
       </StHeader>
       <StInner>{props.children}</StInner>
     </StBackground>
@@ -97,9 +99,6 @@ const StHeader = styled.header`
     background-repeat: no-repeat;
     background-size: contain;
     display: inline-block;
-  }
-  & button {
-    width: 100px;
   }
 `;
 
