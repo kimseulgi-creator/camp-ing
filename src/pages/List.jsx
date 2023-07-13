@@ -13,22 +13,25 @@ function List() {
   if (isLoading) {
     return <p>로딩중입니다...</p>;
   }
-  const currentDate = new Date(data[0].postDate);
-  console.log(currentDate);
-  console.log(data);
-  const dateSplit = String(currentDate).split(' ');
-  const date = `${dateSplit[3]} ${dateSplit[1]} ${dateSplit[2]} ${dateSplit[4]}`;
-  console.log(date);
   return (
     <Layout>
       <StContainer>
         {data.map((post) => {
           return (
-            <StPostingCard>
+            <StPostingCard
+              onClick={() => navigate(`/detail/${post.id}`)}
+              key={post.id}
+            >
               <img src={post.image} />
               <StPostingWord>
                 <p>{`#${post.place.replaceAll(' ', ' #')}`}</p>
-                <p>{date}</p>
+                <p>
+                  {`${String(new Date(post.postDate)).split(' ')[3]} ${
+                    String(new Date(post.postDate)).split(' ')[1]
+                  } ${String(new Date(post.postDate)).split(' ')[2]} ${
+                    String(new Date(post.postDate)).split(' ')[4]
+                  }`}
+                </p>
               </StPostingWord>
             </StPostingCard>
           );

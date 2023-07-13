@@ -14,7 +14,7 @@ function Router() {
         <Route path="/join" element={<Join />} />
         <Route path="/list" element={<List />} />
         <Route path="/write" element={<Write />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail />} />
       </Routes>
     </BrowserRouter>
   );
