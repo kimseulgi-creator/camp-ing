@@ -13,4 +13,12 @@ const deletePost = async (id) => {
   await axios.delete(`${process.env.REACT_APP_SERVER_URL}/posts/${id}`);
 };
 
-export { getPosts, addPost, deletePost };
+const editPost = async (editPost) => {
+  console.log(editPost);
+  await axios.put(
+    `${process.env.REACT_APP_SERVER_URL}/posts/${editPost.id}`,
+    editPost
+  );
+};
+
+export { getPosts, addPost, deletePost, editPost };

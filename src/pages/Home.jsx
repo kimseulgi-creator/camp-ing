@@ -28,11 +28,11 @@ function Home() {
   });
 
   const [inputs, setInputs] = useState({
-    userId: '',
+    user: '',
     password: '',
   });
 
-  const { userId, password } = inputs;
+  const { user, password } = inputs;
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -44,8 +44,8 @@ function Home() {
   }
 
   const loginButtonHandler = () => {
-    const filterLoginUser = data.filter((user) => {
-      return user.userId === userId && user.password === password;
+    const filterLoginUser = data.filter((userData) => {
+      return userData.user === user && userData.password === password;
     });
     dispatch(loginUser(filterLoginUser));
 
@@ -53,9 +53,9 @@ function Home() {
     if (filterLoginUser != false) {
       const [loginUser] = filterLoginUser;
       console.log(loginUser);
-      const { id, userId, isLogin } = loginUser;
+      const { id, user, isLogin } = loginUser;
       mutation.mutate({ id, isLogin: true });
-      alert(`welcome ${userId}💚`);
+      alert(`welcome ${user}💚`);
       navigate('/list');
     } else {
       alert('아이디와 비밀번호를 확인해주세요.');
@@ -87,10 +87,10 @@ function Home() {
           }}
         >
           <input
-            name="userId"
+            name="user"
             type="text"
             placeholder="아이디"
-            value={userId}
+            value={user}
             onChange={onChange}
           />
           <input

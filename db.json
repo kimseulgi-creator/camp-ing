@@ -1,22 +1,23 @@
 {
   "users": [
     {
-      "user": "asdfg",
+      "user": "qwerty",
       "nickName": "",
-      "password": "gksrnr783!",
+      "password": "qwerty1!",
       "isLogin": false,
-      "id": "yCbVQNCi5"
+      "id": "YV9UrpqS1"
     }
   ],
   "posts": [
     {
-      "firstday": "2023-07-13",
-      "lastday": "2023-07-14",
-      "place": "awef",
-      "review": "awefawefawef",
-      "id": "COY3fwImp",
-      "image": "https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/undefined%2F1.jpeg?alt=media&token=3151093b-2421-4ede-bd38-27ead8d6def6",
-      "postDate": 1689246150558
+      "firstday": "2023-07-26",
+      "lastday": "2023-07-27",
+      "place": "가평",
+      "review": "안홍민 가만안둬",
+      "id": "LUGwYJKH5",
+      "user": "qwerty",
+      "image": "https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/qwerty%2F9.jpeg?alt=media&token=43166fed-77b3-4975-99e2-fac53620afa7",
+      "postDate": 1689251912361
     }
   ]
 }

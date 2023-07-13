@@ -69,7 +69,15 @@ function Detail() {
           </StInfo>
           <StButtonWrap>
             <Button onClick={() => deletButtonHandler()}>Delete</Button>
-            <Button>Edit</Button>
+            <Button
+              onClick={() =>
+                navigate(`/editdetail/${param.id}`, {
+                  state: postDetailData[0],
+                })
+              }
+            >
+              Edit
+            </Button>
           </StButtonWrap>
         </StDetailContents>
       </StFormBg>
