@@ -2,16 +2,22 @@ import React from 'react';
 import Layout from '../components/Layout';
 import { StFormBg } from '../style/JoinStyle';
 import { useNavigate, useParams } from 'react-router';
-import { useQuery } from 'react-query';
-import { getPosts } from '../api/posts';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { deletePost, getPosts } from '../api/posts';
 import Button from '../components/Button';
 import { StDetailContents, StDetailImg, StInfo } from '../style/DetailStyle';
 import { StButtonWrap } from '../style/HomeStyle';
 
 function Detail() {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const param = useParams();
-
+  const mutation = useMutation(deletePost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('posts');
+      console.log('성공하였습니다!');
+    },
+  });
   const { isLoading, isError, data } = useQuery('posts', getPosts);
   if (isLoading) {
     return <p>로딩중입니다...</p>;
@@ -28,6 +34,12 @@ function Detail() {
     1;
   console.log(period);
 
+  const deletButtonHandler = () => {
+    alert('삭제버튼이 클릭되었습니다.');
+    mutation.mutate(deletePost(param.id));
+    navigate('/list');
+  };
+
   return (
     <Layout>
       <StFormBg
@@ -37,7 +49,7 @@ function Detail() {
         flexDirection={'row'}
       >
         <StDetailImg>
-          <img src="https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/qwerty%2F000022940015.jpg?alt=media&token=c627facb-ec2b-4142-b9bd-1b98df036f4a" />
+          <img src={image} />
         </StDetailImg>
         <StDetailContents>
           <p>{userId}</p>
@@ -56,8 +68,16 @@ function Detail() {
             </dl>
           </StInfo>
           <StButtonWrap>
-            <Button>Delete</Button>
-            <Button>Edit</Button>
+            <Button onClick={() => deletButtonHandler()}>Delete</Button>
+            <Button
+              onClick={() =>
+                navigate(`/editdetail/${param.id}`, {
+                  state: postDetailData[0],
+                })
+              }
+            >
+              Edit
+            </Button>
           </StButtonWrap>
         </StDetailContents>
       </StFormBg>

@@ -23,14 +23,14 @@ function Join() {
   });
 
   const [inputs, setInputs] = useState({
-    userId: '',
+    user: '',
     nickName: '',
     password: '',
   });
 
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const { userId, nickName, password } = inputs;
+  const { user, nickName, password } = inputs;
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -39,7 +39,7 @@ function Join() {
       [name]: value,
     });
   };
-  const userIdRef = useRef('');
+  const userRef = useRef('');
   const passwordRef = useRef('');
   const passwordConfirmRef = useRef('');
   const idValidationMsgRef = useRef('');
@@ -49,7 +49,7 @@ function Join() {
   const idCheck = /^(?=.*[a-z])[a-z0-9]{5,20}$/;
   const pwCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
   useEffect(() => {
-    if (!idCheck.test(inputs.userId)) {
+    if (!idCheck.test(inputs.user)) {
       idValidationMsgRef.current.style.display = 'block';
       // return false;
     } else {
@@ -80,9 +80,9 @@ function Join() {
     console.log(idValidation === 'none');
     console.log(pwValidation === 'none');
     console.log(checkPwValidation === 'none');
-    if (inputs.userId === '') {
+    if (inputs.user === '') {
       alert('아이디를 입력해주세요.');
-      userIdRef.current.focus();
+      userRef.current.focus();
       return false;
     } else if (inputs.password === '') {
       alert('비밀번호를 입력해주세요.');
@@ -117,11 +117,11 @@ function Join() {
           <label>
             아이디
             <input
-              name="userId"
+              name="user"
               type="text"
-              value={userId}
+              value={user}
               onChange={onChange}
-              ref={userIdRef}
+              ref={userRef}
             />
           </label>
           <p ref={idValidationMsgRef}>
