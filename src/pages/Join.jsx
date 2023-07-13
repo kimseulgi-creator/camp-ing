@@ -11,26 +11,23 @@ import { StFormBg } from '../style/JoinStyle';
 function Join() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  // const { isLoading, isError, data } = useQuery('users', getUsers);
-  // if (isLoading) {
-  //   return <p>로딩중입니다...</p>;
-  // }
+
+  // Invalidate의 과정
   const mutation = useMutation(addUser, {
     onSuccess: () => {
       queryClient.invalidateQueries('users');
-      console.log('성공하였습니다!');
     },
   });
 
+  // 다중 input
   const [inputs, setInputs] = useState({
     user: '',
-    nickName: '',
     password: '',
   });
 
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const { user, nickName, password } = inputs;
+  const { user, password } = inputs;
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -39,6 +36,8 @@ function Join() {
       [name]: value,
     });
   };
+
+  // 유효성 검사를 위한 Dom 요소 접근
   const userRef = useRef('');
   const passwordRef = useRef('');
   const passwordConfirmRef = useRef('');
@@ -46,40 +45,36 @@ function Join() {
   const pwValidationMsgRef = useRef('');
   const checkPwValidationMsgRef = useRef('');
 
+  // 정규표현식
   const idCheck = /^(?=.*[a-z])[a-z0-9]{5,20}$/;
   const pwCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+
+  // 유효성 검사
   useEffect(() => {
     if (!idCheck.test(inputs.user)) {
       idValidationMsgRef.current.style.display = 'block';
-      // return false;
     } else {
       idValidationMsgRef.current.style.display = 'none';
     }
 
     if (!pwCheck.test(inputs.password)) {
       pwValidationMsgRef.current.style.display = 'block';
-      // return false;
     } else {
       pwValidationMsgRef.current.style.display = 'none';
     }
 
     if (inputs.password !== confirmPassword) {
-      console.log(inputs.password);
-      console.log(confirmPassword);
       checkPwValidationMsgRef.current.style.display = 'block';
-      // return false;
     } else {
       checkPwValidationMsgRef.current.style.display = 'none';
     }
   }, [inputs, confirmPassword]);
 
+  // join 버튼 클릭시 유효성 검사 후 json server users 컬렉션에 데이터 추가
   const joinButtonHandler = () => {
     const idValidation = idValidationMsgRef.current.style.display;
     const pwValidation = pwValidationMsgRef.current.style.display;
     const checkPwValidation = checkPwValidationMsgRef.current.style.display;
-    console.log(idValidation === 'none');
-    console.log(pwValidation === 'none');
-    console.log(checkPwValidation === 'none');
     if (inputs.user === '') {
       alert('아이디를 입력해주세요.');
       userRef.current.focus();
@@ -127,16 +122,6 @@ function Join() {
           <p ref={idValidationMsgRef}>
             5~20자의 영문 소문자, 숫자만 사용 가능합니다.
           </p>
-
-          {/* <label>
-            닉네임
-            <input
-              name="nickName"
-              type="text"
-              value={nickName}
-              onChange={onChange}
-            />
-          </label> */}
           <label>
             비밀번호
             <input

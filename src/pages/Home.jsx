@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import Bg from '../images/login_bg.jpg';
 import { useNavigate } from 'react-router';
-// import { useCookies } from 'react-cookie';
 import { editUser, getUsers } from '../api/users';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loginUser } from '../redux/modules/LoginSlice';
 import Button from '../components/Button';
 import {
@@ -15,18 +14,18 @@ import {
 } from '../style/HomeStyle';
 
 function Home() {
-  // const loginUserData = useSelector((state) => state);
-  // const [cookies, setCookie] = useCookies();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
+
+  // Invalidate의 과정
   const mutation = useMutation(editUser, {
     onSuccess: () => {
       queryClient.invalidateQueries('users');
-      console.log('성공하였습니다!');
     },
   });
 
+  // 다중 input
   const [inputs, setInputs] = useState({
     user: '',
     password: '',
@@ -38,21 +37,23 @@ function Home() {
     const { value, name } = e.target;
     setInputs({ ...inputs, [name]: value });
   };
+
+  // json server에서 users 컬렉션 데이터 가져오기
   const { isLoading, isError, data } = useQuery('users', getUsers);
   if (isLoading) {
     return <p>로딩중입니다...</p>;
   }
 
+  // 로그인 버튼 클릭시 json server users 데이터 중 id와 비밀번호 같은 데이터 불러오기
   const loginButtonHandler = () => {
     const filterLoginUser = data.filter((userData) => {
       return userData.user === user && userData.password === password;
     });
     dispatch(loginUser(filterLoginUser));
 
-    // console.log(filterLoginUser == false);
+    // 해당 데이터 중 isLogin:true로 변경
     if (filterLoginUser != false) {
       const [loginUser] = filterLoginUser;
-      console.log(loginUser);
       const { id, user, isLogin } = loginUser;
       mutation.mutate({ id, isLogin: true });
       alert(`welcome ${user}💚`);
@@ -60,14 +61,6 @@ function Home() {
     } else {
       alert('아이디와 비밀번호를 확인해주세요.');
     }
-
-    // if (id) {
-    //   alert('로그인 성공');
-    //   // mutation.mutate({ id, isLogin });
-    //   // navigate('/list');
-    // } else {
-    //   alert('로그인 실패');
-    // }
   };
 
   return (
@@ -103,9 +96,7 @@ function Home() {
           <StButtonWrap marginTop="40px">
             <Button
               onClick={function () {
-                // setCookie('id', inputs.email)
                 loginButtonHandler();
-                // navigate('/list');
               }}
             >
               LOGIN

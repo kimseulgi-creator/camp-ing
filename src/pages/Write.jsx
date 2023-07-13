@@ -15,17 +15,20 @@ import Button from '../components/Button';
 import { StLabel } from '../style/WriteStyle';
 
 function Write() {
+  // isLogin:true인 데이터 가져오기
   const filterLoginUser = useSelector((state) => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  // Invalidate의 과정
   const mutation = useMutation(addPost, {
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
-      console.log('성공하였습니다!');
     },
   });
-  // const [image, setImage] = useState('');
+
+  // 다중 input
   const [inputs, setInputs] = useState({
     firstday: '',
     lastday: '',
@@ -42,24 +45,30 @@ function Write() {
       [name]: value,
     });
   };
+
+  // 유효성 검사를 위한 Dom 요소 접근
   const placeRef = useRef('');
   const reviewRef = useRef('');
   const [selectedFile, setSelectedFile] = useState(null);
+
+  // json server에서 users 컬렉션 데이터 가져오기
   const { isLoading, isError, data } = useQuery('users', getUsers);
   if (isLoading) {
     return <p>로딩중입니다...</p>;
   }
   dispatch(loginUser(data));
-  console.log(filterLoginUser);
-  const { user, password, id } = filterLoginUser;
+  const { user } = filterLoginUser;
 
+  // 캠핑 기간 구하는 계산식
   const period =
     Number(lastday.replaceAll('-', '')) - Number(firstday.replaceAll('-', ''));
 
+  // 이미지 파일 select시
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
+  // post 버튼 클릭시 유효성 검사 후 json server posts컬렉션에 데이터 추가
   const handleUpload = async () => {
     if (selectedFile === null) {
       alert('이미지 한장을 선택해주세요.');
@@ -84,20 +93,16 @@ function Write() {
       await uploadBytes(imageRef, selectedFile);
 
       const imgDownloadURL = await getDownloadURL(imageRef);
-      // setImage(imgDownloadURL);
-      console.log(imgDownloadURL);
       mutation.mutate({
         ...inputs,
         id: shortid(),
         user,
-        // image,
         image: imgDownloadURL,
         postDate: Date.now(),
       });
       navigate('/list');
     }
   };
-  console.log(inputs);
   return (
     <StBgSection backgroundimg={Bg}>
       <StFormBg padding={'60px 0'}>

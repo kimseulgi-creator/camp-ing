@@ -13,6 +13,7 @@ import {
 function List() {
   const navigate = useNavigate();
 
+  // json server에서 posts 컬렉션 데이터 가져오기
   const { isLoading, isError, data } = useQuery('posts', getPosts);
   if (isLoading) {
     return <p>로딩중입니다...</p>;

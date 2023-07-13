@@ -7,6 +7,7 @@ const initialState = {
   isLogin: '',
 };
 
+// isLogin:true인 user 데이터 추출
 const LoginSlice = createSlice({
   name: 'login',
   initialState,
