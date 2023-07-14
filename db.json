@@ -17,6 +17,12 @@
       "password": "qwerty1!",
       "isLogin": false,
       "id": "z1L4OIz95"
+    },
+    {
+      "user": "lovable",
+      "password": "qwerty1!",
+      "isLogin": false,
+      "id": "-BwyCK1jW"
     }
   ],
   "posts": [
@@ -59,6 +65,16 @@
       "user": "weenymt",
       "image": "https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/weenymt%2Freveiw04.jpg?alt=media&token=0eccbca4-8620-4815-8f0e-ce74c3b0946b",
       "postDate": 1689312031670
+    },
+    {
+      "firstday": "2023-07-10",
+      "lastday": "2023-07-12",
+      "place": "가평 지금,쉬다",
+      "review": "제가 갔던 캠핑장 중에 제일 좋았던 곳이였어요!!\n일단 너무 청결하고, 사장님 두분 너무 친절하시고, 사이트도 크고 삥 둘러서 겉으로만 사이트 있어서 어디서든 시야가 확 트이더군요",
+      "id": "HOt91eRrJ",
+      "user": "lovable",
+      "image": "https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/lovable%2FIMG_6755.jpg?alt=media&token=f600d5cd-bfc5-4416-a17e-fda0bab1e819",
+      "postDate": 1689315429101
     }
   ]
 }
