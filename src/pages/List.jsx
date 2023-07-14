@@ -25,7 +25,11 @@ function List() {
         {data.map((post) => {
           return (
             <StPostingCard
-              onClick={() => navigate(`/detail/${post.id}`)}
+              onClick={() =>
+                navigate(`/detail/${post.id}`, {
+                  state: post.user,
+                })
+              }
               key={post.id}
             >
               <img src={post.image} />

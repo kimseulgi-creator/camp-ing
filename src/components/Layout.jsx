@@ -22,6 +22,7 @@ function Layout(props) {
     },
   });
 
+  // json server에서 users 컬렉션 데이터 가져오기
   const { isLoading, isError, data } = useQuery('users', getUsers);
   if (isLoading) {
     return <p>로딩중입니다...</p>;

@@ -12,6 +12,7 @@ function Button(props) {
 
 export default Button;
 export const StButton = styled.button`
+  display: ${(props) => props.display};
   background-color: ${(props) => props.backgroundcolor || '#002925'};
   width: ${(props) => props.width || '140px'};
   height: 30px;
