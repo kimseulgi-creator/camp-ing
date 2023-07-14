@@ -2,99 +2,85 @@ import React, { useRef, useState } from 'react';
 import { StBgSection, StButtonWrap, StForm } from '../style/HomeStyle';
 import Bg from '../images/form_bg.jpg';
 import { StFormBg } from '../style/JoinStyle';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { addPost } from '../api/posts';
-import { useNavigate } from 'react-router';
+import { useMutation, useQueryClient } from 'react-query';
+import { editPost } from '../api/posts';
+import { useLocation, useNavigate } from 'react-router';
 import { getDownloadURL, ref, uploadBytes } from '@firebase/storage';
 import { storage } from '../firebase';
-import { getUsers } from '../api/users';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../redux/modules/LoginSlice';
-import shortid from 'shortid';
 import Button from '../components/Button';
 import { StLabel } from '../style/WriteStyle';
-import useInput from '../hooks/useInput';
 
-function Write() {
-  // isLogin:true인 데이터 가져오기
-  const filterLoginUser = useSelector((state) => state.login);
-  const dispatch = useDispatch();
+function EditDetail() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
+
+  const editData = useLocation();
+  const { id, user, image, firstday, lastday, place, review, postDate } =
+    editData.state;
 
   // Invalidate의 과정
-  const mutation = useMutation(addPost, {
+  const queryClient = useQueryClient();
+  const mutation = useMutation(editPost, {
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
     },
   });
 
-  //커스텀 훅 useInput
-  const [inputs, onChange] = useInput({
-    firstday: '',
-    lastday: '',
-    place: '',
-    review: '',
-  });
-
-  const { firstday, lastday, place, review } = inputs;
+  // input state
+  const [editFirstday, setEditFirstday] = useState(firstday);
+  const [editLastday, setEditLastday] = useState(lastday);
+  const [editPlace, setEditPlace] = useState(place);
+  const [editReview, setEditReview] = useState(review);
 
   // 유효성 검사를 위한 Dom 요소 접근
-  const placeRef = useRef('');
-  const reviewRef = useRef('');
-  const [selectedFile, setSelectedFile] = useState(null);
-
-  // json server에서 users 컬렉션 데이터 가져오기
-  const { isLoading, isError, data } = useQuery('users', getUsers);
-  if (isLoading) {
-    return <p>로딩중입니다...</p>;
-  }
-  dispatch(loginUser(data));
-  const { user } = filterLoginUser;
+  const editPlaceRef = useRef('');
+  const editReviewRef = useRef('');
+  const [selectedFile, setSelectedFile] = useState('');
 
   // 캠핑 기간 구하는 계산식
   const period =
-    Number(lastday.replaceAll('-', '')) - Number(firstday.replaceAll('-', ''));
+    Number(editLastday.replaceAll('-', '')) -
+    Number(editFirstday.replaceAll('-', ''));
 
   // 이미지 파일 select시
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
-  // post 버튼 클릭시 유효성 검사 후 json server posts컬렉션에 데이터 추가
+  // 유효성 검사
   const checkReview = /.{10,}/g;
   const handleUpload = async () => {
-    if (selectedFile === null) {
-      alert('이미지 한장을 선택해주세요.');
-      return false;
-    } else if (firstday === '' || lastday === '') {
-      alert('캠핑 날짜를 입력해주세요');
-      return false;
-    } else if (period < 0) {
+    if (period < 0) {
       alert('입력해주신 캠핑기간이 1일 미만인거 같아요!');
       return false;
-    } else if (place === '') {
+    } else if (editPlace === '') {
       alert('캠핑 장소를 입력해주세요');
-      placeRef.current.focus();
+      editPlaceRef.current.focus();
       return false;
-    } else if (review === '' || !checkReview.test(review)) {
+    } else if (editReview === '' && !checkReview.test(editReview)) {
       alert('캠핑 중 인상 깊었던 내용을 10글자 이상 입력해주세요');
-      reviewRef.current.focus();
+      editReviewRef.current.focus();
       return false;
     } else {
       // ref 함수를 이용해서 Storage 내부 저장할 위치를 지정하고, uploadBytes 함수를 이용해서 파일을 저장합니다.
       const imageRef = ref(storage, `${user}/${selectedFile.name}`);
       await uploadBytes(imageRef, selectedFile);
-      const imgDownloadURL = await getDownloadURL(imageRef);
+
+      const editImgDownloadURL = await getDownloadURL(imageRef);
+
+      // 이미지를 수정하지 않고 edit 버튼 클릭시 undefined가 포함된 이미지 주소가 들어가는데 그 주소에서 'undefined' 문자를 추출
+      const undefinedImg = editImgDownloadURL.split('?')[0].slice(-9);
       mutation.mutate({
-        ...inputs,
-        id: shortid(),
+        firstday: editFirstday,
+        lastday: editLastday,
+        place: editPlace,
+        review: editReview,
+        id,
         user,
-        image: imgDownloadURL,
-        postDate: Date.now(),
+        image: undefinedImg === 'undefined' ? image : editImgDownloadURL,
+        postDate,
       });
-      alert('포스트 작성이 완료되었습니다👏');
-      navigate('/list');
+      alert('해당 게시글 수정이 완료되었습니다.');
+      navigate(`/detail/${id}`);
     }
   };
   return (
@@ -113,36 +99,32 @@ function Write() {
           <StLabel>
             캠핑 날짜
             <input
-              name="firstday"
               type="date"
-              value={firstday}
-              onChange={onChange}
+              value={editFirstday}
+              onChange={(e) => setEditFirstday(e.target.value)}
             />
             ~
             <input
-              name="lastday"
               type="date"
-              value={lastday}
-              onChange={onChange}
+              value={editLastday}
+              onChange={(e) => setEditLastday(e.target.value)}
             />
           </StLabel>
           <StLabel>
             캠핑 장소
             <input
-              name="place"
               type="text"
-              value={place}
-              onChange={onChange}
-              ref={placeRef}
+              value={editPlace}
+              onChange={(e) => setEditPlace(e.target.value)}
+              ref={editPlaceRef}
             />
           </StLabel>
           <StLabel>
             <textarea
-              name="review"
               placeholder="캠핑을 다녀오면서 인상깊었던 내용을 적어보세요(10글자 이상)"
-              value={review}
-              onChange={onChange}
-              ref={reviewRef}
+              value={editReview}
+              onChange={(e) => setEditReview(e.target.value)}
+              ref={editReviewRef}
             ></textarea>
           </StLabel>
           <StButtonWrap>
@@ -159,4 +141,4 @@ function Write() {
   );
 }
 
-export default Write;
+export default EditDetail;

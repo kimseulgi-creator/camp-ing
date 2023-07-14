@@ -5,6 +5,7 @@ import Join from '../pages/Join';
 import List from '../pages/List';
 import Write from '../pages/Write';
 import Detail from '../pages/Detail';
+import EditDetail from '../pages/EditDetail';
 
 function Router() {
   return (
@@ -14,7 +15,8 @@ function Router() {
         <Route path="/join" element={<Join />} />
         <Route path="/list" element={<List />} />
         <Route path="/write" element={<Write />} />
-        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/editdetail/:id" element={<EditDetail />} />
       </Routes>
     </BrowserRouter>
   );
