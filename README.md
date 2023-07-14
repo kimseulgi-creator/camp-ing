@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+<h1>Camp ing</h1><br>
+내일배움캠프 6기 2조 개인과제 23.07.09 - 23.07.14<br>
+<br>
+<br>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. 프로젝트 소개<br>
+회원가입과 로그인을 하고 캠핑,글램핑에 대한 리뷰를 나눌수 있는 웹사이트입니다.
+<br>
 
-## Available Scripts
+2. 구현 기능
+- UI 구현하기
+- Post 추가 하기
+- Post 수정 하기
+- Post 삭제 하기
+- 회원가입 및 로그인
+<br>
 
-In the project directory, you can run:
+3. 프로젝트 주소
+https://camp-ht2f1k02u-kimseulgi-creator.vercel.app/?vercelToolbarCode=uatKulZ3FkAPLzw
+<br>
 
-### `yarn start`
+4. 기술스택
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/>
+	<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white" />
+	<img src="https://img.shields.io/badge/Styledcomponents-DB7093?style=flat&logo=Styledcomponents&logoColor=white" />
+  <img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=Firebase&logoColor=white" />
+<br>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+5. API Table
 
-### `yarn test`
+| Number | Method | URL                                   | Description     | Request                                                      | Response                                                     |
+| ------ | ------ | ------------------------------------- | --------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 1      | `POST` | /api/home                             | 로그인          | {'id' : id, 'isLogin' : true}                                       | { 'id' : id, 'user' : userId, 'pasword' : password  }                                                      |
+| 2      | `POST` | /api/join                          | 회원가입        | {'user' : userId, 'password' : password}                            | {'user' : userId}                                                            |
+| 3      | `POST` | /api/write                          | 게시글 등록       | { 'Id':게시글id, 'user': 작성자, 'image': imageUrl, 'postDate':게시글 작성날짜, firstday' : 캠핑 첫 날, 'lastday' : 캠핑 마지막 날, 'place' : 캠핑 장소, 'review': 캠핑 내용 }                  |  {'user' : userId}                                                             |
+| 4      | `POST` | /api/editdetail                             | 게시글 수정          | { 'Id':게시글id, 'user': 작성자, 'image': imageUrl, 'postDate':게시글 작성날짜, firstday' : 캠핑 첫 날, 'lastday' : 캠핑 마지막 날, 'place' : 캠핑 장소, 'review': 캠핑 내용 }                                          |                                                              |
+| 5      | `GET` | /api/list                         | 게시글 리스트   |                               |  {'image': imageUrl, 'place' : 캠핑 장소, 'postDate':게시글 작성날짜 }                                                            |
+| 6      | `GET` | /api/detail                          | 게시글 상세보기     |  |  {'Id':게시글id, 'user' : userId, 'image': imageUrl, firstday' : 캠핑 첫 날, 'lastday' : 캠핑 마지막 날, 'place' : 캠핑 장소, 'review': 캠핑 내용 }                                                           |
+<br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+6. 컴포넌트 소개
+- Layout<br>
+  header와 최대 넓이 1300px 지정해주는 inner class가 묶여 있는 컴포넌트입니다.
+  
+- Button<br>
+모든 스타일과 기능을 구현할 수 있는 버튼
+<br>
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+7. 프로젝트 시연 영상<br>
+<br>
