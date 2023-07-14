@@ -56,7 +56,7 @@ function EditDetail() {
       alert('캠핑 장소를 입력해주세요');
       editPlaceRef.current.focus();
       return false;
-    } else if (editReview === '' && !checkReview.test(editReview)) {
+    } else if (editReview === '' || !checkReview.test(editReview)) {
       alert('캠핑 중 인상 깊었던 내용을 10글자 이상 입력해주세요');
       editReviewRef.current.focus();
       return false;
