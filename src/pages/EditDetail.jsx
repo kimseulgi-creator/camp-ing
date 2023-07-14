@@ -80,7 +80,7 @@ function EditDetail() {
         postDate,
       });
       alert('해당 게시글 수정이 완료되었습니다.');
-      navigate('/list');
+      navigate(`/detail/${id}`);
     }
   };
   return (

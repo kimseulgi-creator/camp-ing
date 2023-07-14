@@ -52,6 +52,7 @@ export const StInfo = styled.dl`
       dd {
         margin: 15px 0px 0px 0px;
         height: 200px;
+        line-height: 28px;
         overflow: auto;
       }
     }

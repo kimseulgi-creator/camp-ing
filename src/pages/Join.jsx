@@ -73,7 +73,6 @@ function Join() {
   // json server에서 posts 컬렉션 데이터 가져오기
   const { isLoading, isError, data } = useQuery('users', getUsers);
   if (isLoading) return <p>로딩중입니다...</p>;
-  if (isError) return <p>에러입니다</p>;
 
   // join 버튼 클릭시 유효성 검사 후 json server users 컬렉션에 데이터 추가
   const joinButtonHandler = () => {
@@ -136,7 +135,7 @@ function Join() {
             비밀번호
             <input
               name="password"
-              type="text"
+              type="password"
               value={password}
               onChange={onChange}
               ref={passwordRef}
@@ -149,7 +148,7 @@ function Join() {
           <label>
             비밀번호 확인
             <input
-              type="text"
+              type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               ref={passwordConfirmRef}

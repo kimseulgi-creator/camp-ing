@@ -27,5 +27,6 @@ export const StLabel = styled.label`
     resize: none;
     box-shadow: 3px 3px 10px 0 #00000030 inset;
     margin-bottom: 60px;
+    line-height: 24px;
   }
 `;

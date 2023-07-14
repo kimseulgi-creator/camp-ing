@@ -1,19 +1,30 @@
-import React from 'react';
 import Layout from '../components/Layout';
 import { StFormBg } from '../style/JoinStyle';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deletePost, getPosts } from '../api/posts';
-import Button, { StButton } from '../components/Button';
+import { StButton } from '../components/Button';
 import closeBtnImg from '../images/close_btn.svg';
 import { StDetailContents, StDetailImg, StInfo } from '../style/DetailStyle';
 import { StButtonWrap } from '../style/HomeStyle';
 import { StEtcBtn } from '../style/ListStyle';
+import { useSelector } from 'react-redux';
+import moment from 'moment/moment';
 
 function Detail() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const param = useParams();
+  const postUser = useLocation();
+  const filterLoginUser = useSelector((state) => state.login);
+
+  // 해당 포스트 게시자가 아닌 경우 수정, 삭제 버튼 안보이게 하기.
+  let displayValue = '';
+  if (postUser.state !== filterLoginUser.user) {
+    displayValue = 'none';
+  } else {
+    displayValue = 'inline-block';
+  }
 
   // Invalidate의 과정
   const mutation = useMutation(deletePost, {
@@ -35,13 +46,13 @@ function Detail() {
 
   // 데이터 구조분해 할당
   const [postDetail] = postDetailData;
-  const { userId, firstday, lastday, place, review, image } = postDetail;
+  const { user, firstday, lastday, place, review, image } = postDetail;
 
   // 캠핑 기간 구하는 계산식
-  const period =
-    Number(lastday.replaceAll('-', '')) -
-    Number(firstday.replaceAll('-', '')) +
-    1;
+  const startDate = moment(firstday);
+  const endDate = moment(lastday);
+  const duration = moment.duration(endDate.diff(startDate));
+  const days = duration.asDays();
 
   // 삭제 버튼 클릭시 데이터 삭제 후 list 페이지로 이동
   const deletButtonHandler = () => {
@@ -63,9 +74,9 @@ function Detail() {
           <img src={image} />
         </StDetailImg>
         <StDetailContents>
-          <p>{userId}</p>
+          <p>{user}</p>
           <StInfo>
-            <p>{`${period}일간 캠핑🍃`}</p>
+            <p>{days === 0 ? '당일치기 캠핑🍃' : `${days}일간 캠핑🍃`}</p>
             <dl>
               <dt>{`${firstday} ~ ${lastday}`}</dt>
             </dl>
@@ -79,26 +90,28 @@ function Detail() {
             </dl>
           </StInfo>
           <StButtonWrap>
-            <Button
+            <StButton
               onClick={() =>
                 navigate(`/editdetail/${param.id}`, {
                   state: postDetailData[0],
                 })
               }
+              display={displayValue}
             >
               Edit
-            </Button>
+            </StButton>
             <StButton
               onClick={deletButtonHandler}
               backgroundcolor="#fd7b6a"
               hoverbackgroundcolor="#f8c5be"
+              display={displayValue}
             >
               Delete
             </StButton>
           </StButtonWrap>
         </StDetailContents>
         <StEtcBtn
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/list')}
           backgroundimg={closeBtnImg}
           boxshadow="none"
           top="60px"
