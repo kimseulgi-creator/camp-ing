@@ -1,58 +1,53 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { StBgSection, StButtonWrap, StForm } from '../style/HomeStyle';
 import Bg from '../images/form_bg.jpg';
 import { StFormBg } from '../style/JoinStyle';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { addPost, editPost, getPosts } from '../api/posts';
+import { useMutation, useQueryClient } from 'react-query';
+import { editPost } from '../api/posts';
 import { useLocation, useNavigate } from 'react-router';
 import { getDownloadURL, ref, uploadBytes } from '@firebase/storage';
 import { storage } from '../firebase';
-import { loginUser } from '../redux/modules/LoginSlice';
-import shortid from 'shortid';
 import Button from '../components/Button';
 import { StLabel } from '../style/WriteStyle';
 
 function EditDetail() {
   const navigate = useNavigate();
-  const editData = useLocation();
 
-  console.log(editData.state);
+  const editData = useLocation();
   const { id, user, image, firstday, lastday, place, review, postDate } =
     editData.state;
 
-  // query 포스트 수정
+  // Invalidate의 과정
   const queryClient = useQueryClient();
   const mutation = useMutation(editPost, {
     onSuccess: () => {
       queryClient.invalidateQueries('posts');
-      console.log('성공하였습니다!');
     },
   });
+
+  // input state
   const [editFirstday, setEditFirstday] = useState(firstday);
   const [editLastday, setEditLastday] = useState(lastday);
   const [editPlace, setEditPlace] = useState(place);
   const [editReview, setEditReview] = useState(review);
-  // 다중 input
-  // const [image, setImage] = useState('');
 
   // 유효성 검사를 위한 Dom 요소 접근
   const editPlaceRef = useRef('');
   const editReviewRef = useRef('');
   const [selectedFile, setSelectedFile] = useState('');
 
-  // useEffect(() => {}, []);
-
-  // 캠핑기간 구하는 식
+  // 캠핑 기간 구하는 계산식
   const period =
     Number(editLastday.replaceAll('-', '')) -
     Number(editFirstday.replaceAll('-', ''));
 
-  // 이미지 파일 select
+  // 이미지 파일 select시
   const handleFileSelect = (event) => {
     setSelectedFile(event.target.files[0]);
   };
 
   // 유효성 검사
+  const checkReview = /.{10,}/g;
   const handleUpload = async () => {
     if (period < 0) {
       alert('입력해주신 캠핑기간이 1일 미만인거 같아요!');
@@ -61,8 +56,8 @@ function EditDetail() {
       alert('캠핑 장소를 입력해주세요');
       editPlaceRef.current.focus();
       return false;
-    } else if (editReview === '') {
-      alert('캠핑 중 인상 깊었던 내용을 입력해주세요');
+    } else if (editReview === '' && !checkReview.test(editReview)) {
+      alert('캠핑 중 인상 깊었던 내용을 10글자 이상 입력해주세요');
       editReviewRef.current.focus();
       return false;
     } else {
@@ -71,9 +66,9 @@ function EditDetail() {
       await uploadBytes(imageRef, selectedFile);
 
       const editImgDownloadURL = await getDownloadURL(imageRef);
-      // setImage(editImgDownloadURL);
+
+      // 이미지를 수정하지 않고 edit 버튼 클릭시 undefined가 포함된 이미지 주소가 들어가는데 그 주소에서 'undefined' 문자를 추출
       const undefinedImg = editImgDownloadURL.split('?')[0].slice(-9);
-      console.log(undefinedImg);
       mutation.mutate({
         firstday: editFirstday,
         lastday: editLastday,
@@ -84,6 +79,7 @@ function EditDetail() {
         image: undefinedImg === 'undefined' ? image : editImgDownloadURL,
         postDate,
       });
+      alert('해당 게시글 수정이 완료되었습니다.');
       navigate('/list');
     }
   };
@@ -125,7 +121,7 @@ function EditDetail() {
           </StLabel>
           <StLabel>
             <textarea
-              placeholder="캠핑을 다녀오면서 인상깊었던 내용을 적어보세요🍃"
+              placeholder="캠핑을 다녀오면서 인상깊었던 내용을 적어보세요(10글자 이상)"
               value={editReview}
               onChange={(e) => setEditReview(e.target.value)}
               ref={editReviewRef}

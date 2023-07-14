@@ -6,7 +6,7 @@ import { editUser, getUsers } from '../api/users';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../redux/modules/LoginSlice';
-import Button, { StButton } from './Button';
+import { StButton } from './Button';
 import { StButtonWrap } from '../style/HomeStyle';
 
 function Layout(props) {
@@ -14,10 +14,11 @@ function Layout(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  // Invalidate의 과정
   const mutation = useMutation(editUser, {
     onSuccess: () => {
       queryClient.invalidateQueries('users');
-      console.log('성공하였습니다!');
     },
   });
 
@@ -25,22 +26,24 @@ function Layout(props) {
   if (isLoading) {
     return <p>로딩중입니다...</p>;
   }
+
   dispatch(loginUser(data));
-  console.log(filterLoginUser);
+
   if (!filterLoginUser) {
     // 로그인한 사용자가 없는 경우에 대한 처리
     return <p>로그인한 사용자가 없습니다.</p>;
   }
 
+  // 로그아웃 버튼 클릭시, 해당 id 값을 가지고 있는 data에 isLogin false로 변경
   const logoutButtonHandler = () => {
-    const { id, isLogin } = filterLoginUser;
+    const { id } = filterLoginUser;
     mutation.mutate({ id, isLogin: false });
   };
 
   return (
     <StBackground>
       <StHeader>
-        <a className="loginUserId">{filterLoginUser.userId}</a>
+        <a className="loginUserId">{filterLoginUser.user}</a>
         <h1>
           <a href="#">camp ing</a>
         </h1>

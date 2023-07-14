@@ -1,5 +1,4 @@
 import { styled } from 'styled-components';
-import writeBtn from '../images/write_btn.svg';
 
 export const StContainer = styled.div`
   display: grid;
@@ -50,19 +49,20 @@ export const StPostingWord = styled.div`
   }
 `;
 
-export const StWriteBtn = styled.a`
+export const StEtcBtn = styled.button`
   position: fixed;
-  bottom: 60px;
+  top: ${(props) => props.top};
+  bottom: ${(props) => props.bottom || '60px'};
   right: 60px;
-  background-image: url(${writeBtn});
-  width: 60px;
-  height: 60px;
+  background-image: url(${(props) => props.backgroundimg});
+  width: ${(props) => props.size || '60px'};
+  height: ${(props) => props.size || '60px'};
   background-color: transparent;
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
   text-indent: -9999px;
-  box-shadow: 5px 5px 10px 0 #00000030;
+  box-shadow: ${(props) => props.boxshadow || '5px 5px 10px 0 #00000030'};
   border-radius: 100px;
   cursor: pointer;
   transition: all ease 0.7s;

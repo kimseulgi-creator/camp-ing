@@ -20,12 +20,10 @@ export const StMainWrap = styled.div`
     display: inline-block;
     & h1 {
       background-image: url(${loginLogo});
-      /* width: 800px; */
       width: 41vw;
       background-repeat: no-repeat;
       background-position: center;
       text-indent: -9999px;
-      /* line-height: 450px; */
       line-height: 23vw;
       background-size: contain;
     }
@@ -33,13 +31,11 @@ export const StMainWrap = styled.div`
       font-size: 26px;
       color: white;
       font-weight: bold;
-      /* margin-top: 60px; */
       margin-top: 3vw;
       line-height: 40px;
     }
   }
   & form {
-    /* margin-left: 250px; */
     margin-left: 13vw;
     & div {
       margin-top: 20px;
@@ -63,7 +59,7 @@ export const StForm = styled.form`
 
 export const StButtonWrap = styled.div`
   text-align: center;
-  margin-top: ${(props) => props.marginTop};
+  margin-top: ${(props) => props.margintop};
   & button:nth-child(2) {
     margin-left: 20px;
   }
