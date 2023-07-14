@@ -4,9 +4,11 @@ import { StFormBg } from '../style/JoinStyle';
 import { useNavigate, useParams } from 'react-router';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deletePost, getPosts } from '../api/posts';
-import Button from '../components/Button';
+import Button, { StButton } from '../components/Button';
+import closeBtnImg from '../images/close_btn.svg';
 import { StDetailContents, StDetailImg, StInfo } from '../style/DetailStyle';
 import { StButtonWrap } from '../style/HomeStyle';
+import { StEtcBtn } from '../style/ListStyle';
 
 function Detail() {
   const queryClient = useQueryClient();
@@ -43,18 +45,19 @@ function Detail() {
 
   // 삭제 버튼 클릭시 데이터 삭제 후 list 페이지로 이동
   const deletButtonHandler = () => {
-    alert('삭제버튼이 클릭되었습니다.');
-    mutation.mutate(deletePost(param.id));
-    navigate('/list');
+    if (window.confirm('해당 게시글을 삭제 하시겠습니까?')) {
+      mutation.mutate(deletePost(param.id));
+      navigate('/list');
+    }
   };
 
   return (
     <Layout>
       <StFormBg
-        marginTop={'25px'}
+        margintop={'25px'}
         width={'1300px'}
         height={'740px'}
-        flexDirection={'row'}
+        flexdirection={'row'}
       >
         <StDetailImg>
           <img src={image} />
@@ -76,7 +79,6 @@ function Detail() {
             </dl>
           </StInfo>
           <StButtonWrap>
-            <Button onClick={() => deletButtonHandler()}>Delete</Button>
             <Button
               onClick={() =>
                 navigate(`/editdetail/${param.id}`, {
@@ -86,8 +88,25 @@ function Detail() {
             >
               Edit
             </Button>
+            <StButton
+              onClick={deletButtonHandler}
+              backgroundcolor="#fd7b6a"
+              hoverbackgroundcolor="#f8c5be"
+            >
+              Delete
+            </StButton>
           </StButtonWrap>
         </StDetailContents>
+        <StEtcBtn
+          onClick={() => navigate(-1)}
+          backgroundimg={closeBtnImg}
+          boxshadow="none"
+          top="60px"
+          bottom="0px"
+          size="40px"
+        >
+          이전
+        </StEtcBtn>
       </StFormBg>
     </Layout>
   );

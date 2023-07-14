@@ -43,7 +43,7 @@ function Layout(props) {
   return (
     <StBackground>
       <StHeader>
-        <a className="loginUserId">{filterLoginUser.userId}</a>
+        <a className="loginUserId">{filterLoginUser.user}</a>
         <h1>
           <a href="#">camp ing</a>
         </h1>

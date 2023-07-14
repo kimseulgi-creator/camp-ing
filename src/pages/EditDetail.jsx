@@ -47,6 +47,7 @@ function EditDetail() {
   };
 
   // 유효성 검사
+  const checkReview = /.{10,}/g;
   const handleUpload = async () => {
     if (period < 0) {
       alert('입력해주신 캠핑기간이 1일 미만인거 같아요!');
@@ -55,8 +56,8 @@ function EditDetail() {
       alert('캠핑 장소를 입력해주세요');
       editPlaceRef.current.focus();
       return false;
-    } else if (editReview === '') {
-      alert('캠핑 중 인상 깊었던 내용을 입력해주세요');
+    } else if (editReview === '' && !checkReview.test(editReview)) {
+      alert('캠핑 중 인상 깊었던 내용을 10글자 이상 입력해주세요');
       editReviewRef.current.focus();
       return false;
     } else {
@@ -78,6 +79,7 @@ function EditDetail() {
         image: undefinedImg === 'undefined' ? image : editImgDownloadURL,
         postDate,
       });
+      alert('해당 게시글 수정이 완료되었습니다.');
       navigate('/list');
     }
   };
@@ -119,7 +121,7 @@ function EditDetail() {
           </StLabel>
           <StLabel>
             <textarea
-              placeholder="캠핑을 다녀오면서 인상깊었던 내용을 적어보세요🍃"
+              placeholder="캠핑을 다녀오면서 인상깊었던 내용을 적어보세요(10글자 이상)"
               value={editReview}
               onChange={(e) => setEditReview(e.target.value)}
               ref={editReviewRef}

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Bg from '../images/form_bg.jpg';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { addUser } from '../api/users';
+import { addUser, getUsers } from '../api/users';
 import { useNavigate } from 'react-router';
 import shortid from 'shortid';
 import Button from '../components/Button';
@@ -70,15 +70,25 @@ function Join() {
     }
   }, [inputs, confirmPassword]);
 
+  // json server에서 posts 컬렉션 데이터 가져오기
+  const { isLoading, isError, data } = useQuery('users', getUsers);
+  if (isLoading) return <p>로딩중입니다...</p>;
+  if (isError) return <p>에러입니다</p>;
+
   // join 버튼 클릭시 유효성 검사 후 json server users 컬렉션에 데이터 추가
   const joinButtonHandler = () => {
     const idValidation = idValidationMsgRef.current.style.display;
     const pwValidation = pwValidationMsgRef.current.style.display;
     const checkPwValidation = checkPwValidationMsgRef.current.style.display;
+    const duplicateIdCheck = data.map((userData) => {
+      return userData.user === inputs.user;
+    });
     if (inputs.user === '') {
       alert('아이디를 입력해주세요.');
       userRef.current.focus();
       return false;
+    } else if (duplicateIdCheck[0]) {
+      alert('사용할 수 없는 아이디입니다.');
     } else if (inputs.password === '') {
       alert('비밀번호를 입력해주세요.');
       passwordRef.current.focus();
@@ -146,7 +156,7 @@ function Join() {
             />
           </label>
           <p ref={checkPwValidationMsgRef}>비밀번호가 일치하지 않습니다.</p>
-          <StButtonWrap marginTop="40px">
+          <StButtonWrap margintop="40px">
             <Button onClick={() => joinButtonHandler()}>JOIN</Button>
             <Button onClick={() => navigate(-1)}>CANCEL</Button>
           </StButtonWrap>

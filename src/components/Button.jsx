@@ -12,7 +12,7 @@ function Button(props) {
 
 export default Button;
 export const StButton = styled.button`
-  background-color: #002925;
+  background-color: ${(props) => props.backgroundcolor || '#002925'};
   width: ${(props) => props.width || '140px'};
   height: 30px;
   color: white;
@@ -22,7 +22,7 @@ export const StButton = styled.button`
   transition: all 1s;
   border-radius: 30px;
   &:hover {
-    background-color: #b1d2ce;
+    background-color: ${(props) => props.hoverbackgroundcolor || '#b1d2ce'};
     color: black;
   }
 `;

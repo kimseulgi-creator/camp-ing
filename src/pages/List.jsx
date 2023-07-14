@@ -3,11 +3,12 @@ import Layout from '../components/Layout';
 import { useNavigate } from 'react-router';
 import { useQuery } from 'react-query';
 import { getPosts } from '../api/posts';
+import etcbtn from '../images/write_btn.svg';
 import {
   StContainer,
+  StEtcBtn,
   StPostingCard,
   StPostingWord,
-  StWriteBtn,
 } from '../style/ListStyle';
 
 function List() {
@@ -42,7 +43,9 @@ function List() {
           );
         })}
       </StContainer>
-      <StWriteBtn onClick={() => navigate('/write')}>글쓰기</StWriteBtn>
+      <StEtcBtn onClick={() => navigate('/write')} backgroundimg={etcbtn}>
+        글쓰기
+      </StEtcBtn>
     </Layout>
   );
 }

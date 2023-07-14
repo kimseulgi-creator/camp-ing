@@ -12,10 +12,10 @@ export const StFormBg = styled.div`
   border-radius: 30px;
   box-shadow: 5px 5px 10px 0 #00000030;
   display: flex;
-  flex-direction: ${(props) => props.flexDirection || 'column'};
+  flex-direction: ${(props) => props.flexdirection || 'column'};
   align-items: center;
   justify-content: center;
-  margin-top: ${(props) => props.marginTop};
+  margin-top: ${(props) => props.margintop};
 
   & h2 {
     font-size: 28px;

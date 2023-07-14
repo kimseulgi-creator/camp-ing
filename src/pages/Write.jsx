@@ -13,6 +13,7 @@ import { loginUser } from '../redux/modules/LoginSlice';
 import shortid from 'shortid';
 import Button from '../components/Button';
 import { StLabel } from '../style/WriteStyle';
+import useInput from '../hooks/useInput';
 
 function Write() {
   // isLogin:true인 데이터 가져오기
@@ -28,8 +29,8 @@ function Write() {
     },
   });
 
-  // 다중 input
-  const [inputs, setInputs] = useState({
+  //커스텀 훅 useInput
+  const [inputs, onChange] = useInput({
     firstday: '',
     lastday: '',
     place: '',
@@ -37,14 +38,6 @@ function Write() {
   });
 
   const { firstday, lastday, place, review } = inputs;
-
-  const onChange = (e) => {
-    const { value, name } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-  };
 
   // 유효성 검사를 위한 Dom 요소 접근
   const placeRef = useRef('');
@@ -69,6 +62,7 @@ function Write() {
   };
 
   // post 버튼 클릭시 유효성 검사 후 json server posts컬렉션에 데이터 추가
+  const checkReview = /.{10,}/g;
   const handleUpload = async () => {
     if (selectedFile === null) {
       alert('이미지 한장을 선택해주세요.');
@@ -83,15 +77,14 @@ function Write() {
       alert('캠핑 장소를 입력해주세요');
       placeRef.current.focus();
       return false;
-    } else if (review === '') {
-      alert('캠핑 중 인상 깊었던 내용을 입력해주세요');
+    } else if (review === '' || !checkReview.test(review)) {
+      alert('캠핑 중 인상 깊었던 내용을 10글자 이상 입력해주세요');
       reviewRef.current.focus();
       return false;
     } else {
       // ref 함수를 이용해서 Storage 내부 저장할 위치를 지정하고, uploadBytes 함수를 이용해서 파일을 저장합니다.
       const imageRef = ref(storage, `${user}/${selectedFile.name}`);
       await uploadBytes(imageRef, selectedFile);
-
       const imgDownloadURL = await getDownloadURL(imageRef);
       mutation.mutate({
         ...inputs,
@@ -100,6 +93,7 @@ function Write() {
         image: imgDownloadURL,
         postDate: Date.now(),
       });
+      alert('포스트 작성이 완료되었습니다👏');
       navigate('/list');
     }
   };
@@ -145,7 +139,7 @@ function Write() {
           <StLabel>
             <textarea
               name="review"
-              placeholder="캠핑을 다녀오면서 인상깊었던 내용을 적어보세요🍃"
+              placeholder="캠핑을 다녀오면서 인상깊었던 내용을 적어보세요(10글자 이상)"
               value={review}
               onChange={onChange}
               ref={reviewRef}

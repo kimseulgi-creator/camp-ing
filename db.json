@@ -6,18 +6,24 @@
       "password": "qwerty1!",
       "isLogin": false,
       "id": "YV9UrpqS1"
+    },
+    {
+      "user": "qwerty1",
+      "password": "qwerty1!",
+      "isLogin": false,
+      "id": "wHrwB1k7_"
     }
   ],
   "posts": [
     {
-      "firstday": "2023-07-26",
-      "lastday": "2023-07-27",
-      "place": "가평",
-      "review": "안홍민 가만안둬",
-      "id": "LUGwYJKH5",
+      "firstday": "2023-07-15",
+      "lastday": "2023-07-16",
+      "place": "ㅁㅈㄷㄻㅈㄷ",
+      "review": "ㅁㅈㄷㄻ",
+      "id": "LFKrHEJ7C",
       "user": "qwerty",
-      "image": "https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/qwerty%2F9.jpeg?alt=media&token=43166fed-77b3-4975-99e2-fac53620afa7",
-      "postDate": 1689251912361
+      "image": "https://firebasestorage.googleapis.com/v0/b/camp-ing.appspot.com/o/qwerty%2F8.jpeg?alt=media&token=4aeef2b1-758c-4fb8-94db-8bf603a79248",
+      "postDate": 1689268505286
     }
   ]
 }

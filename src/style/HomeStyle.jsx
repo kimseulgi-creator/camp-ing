@@ -59,7 +59,7 @@ export const StForm = styled.form`
 
 export const StButtonWrap = styled.div`
   text-align: center;
-  margin-top: ${(props) => props.marginTop};
+  margin-top: ${(props) => props.margintop};
   & button:nth-child(2) {
     margin-left: 20px;
   }

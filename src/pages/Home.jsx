@@ -93,7 +93,7 @@ function Home() {
             value={password}
             onChange={onChange}
           />
-          <StButtonWrap marginTop="40px">
+          <StButtonWrap margintop="40px">
             <Button
               onClick={function () {
                 loginButtonHandler();
