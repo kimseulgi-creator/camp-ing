@@ -1,14 +1,14 @@
 # Camp ing
 ![camping](https://github.com/kimseulgi-creator/camp-ing/assets/78592995/a0aa4a4d-2bc4-4b36-9b1a-4b5225d9db8b)
 
-내일배움캠프 6기 2조 개인과제 23.07.09 - 23.07.14<br>
+내일배움캠프 6기 2조 개인과제 23.07.09 - 23.07.14
 <br>
 
 ## 목차
 
 1. [프로젝트 소개](#프로젝트-소개)
 2. [구현기능 및 기술스택](#구현기능)
-3. [배포주소/Figma주소](#배포주소/figma주소)
+3. [배포주소/Figma주소](#배포주소/Figma주소)
 4. [API Table](#api-table)
 5. [컴포넌트 소개](#컴포넌트-소개)
 6. [프로젝트 시연 영상](#프로젝트-시연-영상)
@@ -36,8 +36,11 @@
 	<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white" />
 	<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/>
 	<img src="https://img.shields.io/badge/redux-764ABC?style=flat&logo=redux&logoColor=white"/>
+	<img src="https://img.shields.io/badge/axios-5A29E4?style=flat&logo=axios&logoColor=white" />
+	<img src="https://img.shields.io/badge/reactquery-FF4154?style=flat&logo=reactquery&logoColor=white" />
 	<img src="https://img.shields.io/badge/Styledcomponents-DB7093?style=flat&logo=Styledcomponents&logoColor=white" />
-	<img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=Firebase&logoColor=white" />
+	<img src="https://img.shields.io/badge/json server-000000?style=flat&logo=json&logoColor=white" />
+	<img src="https://img.shields.io/badge/Firestore-FFCA28?style=flat&logo=Firebase&logoColor=white" />
 </div>
 
 <br>
