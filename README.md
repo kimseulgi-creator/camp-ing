@@ -69,4 +69,7 @@
 <br>
 
 ## 프로젝트 시연 영상<br>
+![KakaoTalk_20231026_182027157](https://github.com/kimseulgi-creator/camp-ing/assets/78592995/fb7b150c-11fc-4fa5-babc-2fd198e9d05a)
+![KakaoTalk_20231026_182027157_01](https://github.com/kimseulgi-creator/camp-ing/assets/78592995/77cfb794-d3f9-4028-9d3a-90fc1090bce5)
+
 <br>
